@@ -1,0 +1,34 @@
+package Registration;
+
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+public class Registration {
+
+	public static void main(String[] args) {
+		//FF browser
+		//gecodriver
+		System.setProperty("webdriver.gecko.driver", "C:/Work/geckodriver.exe");
+		WebDriver dr =new FirefoxDriver(); // launch firefox browser
+		dr.get("https://miro.com/signup/"); // write the url on the bar
+		dr.findElement(By.id("name")).sendKeys("Tarandeep");
+		dr.findElement(By.id("email")).sendKeys("Taran12@email.com");
+		dr.findElement(By.id("password")).sendKeys("Test1234");
+		dr.findElement(By.cssSelector("svg[class='mr-checkbox-1__icon']")).click();
+	    dr.findElement(By.className("signup__submit")).click();
+	    dr.manage().timeouts().implicitlyWait(600,TimeUnit.SECONDS) ;  // wait for few seconds as while loading to next page take few seconds
+	    String Actual = dr.getTitle();                                // get the title of the page
+        String Expected = "Please check your email";                  // Expected title for successful Registration
+
+        if (Actual.contains(Expected)) {
+                   System.out.println("Registration Succesfull!");
+        } else {
+                   System.out.println("Registration failed Please try again");
+        }
+
+       dr.close();
+    }
+};
